@@ -36,7 +36,7 @@ public class Grid : MonoBehaviour
             {
                 for (int z = 0; z < GridSizeZ; z++)
                 {
-                    Vector3 worldpoint = worldBottomLeft + Vector3.right * (x * NodeSize + NodeRadius) + Vector3.up * (y * NodeSize + NodeRadius) + Vector3.forward * (z * NodeSize + NodeRadius);
+                 Vector3 worldpoint = worldBottomLeft + Vector3.right * (x * NodeSize + NodeRadius) + Vector3.up * (y * NodeSize + NodeRadius) + Vector3.forward * (z * NodeSize + NodeRadius);
                  bool walkable = !Physics.BoxCast(worldpoint, Vector3.one * NodeRadius, Vector3.up, Quaternion.identity, WalkableMask);
 
                     grid[x, y, z] = new Node(walkable, worldpoint, x, y, z);
