@@ -12,13 +12,19 @@ public class Grid : MonoBehaviour
     int GridSizeX;
     int GridSizeY;
     int GridSizeZ;
+    public List<Node> path;
     private void Start()
     {
         NodeSize = NodeRadius * 2;
-        GridSizeX = Mathf.RoundToInt(GridWorldSize.x/NodeSize);
-        GridSizeY = Mathf.RoundToInt(GridWorldSize.y/ NodeSize);
-        GridSizeZ = Mathf.RoundToInt(GridWorldSize.z/ NodeSize);
+        GridSizeX = Mathf.RoundToInt(GridWorldSize.x / NodeSize);
+        GridSizeY = Mathf.RoundToInt(GridWorldSize.y / NodeSize);
+        GridSizeZ = Mathf.RoundToInt(GridWorldSize.z / NodeSize);
         CreateGrid();
+    }
+    private void Update()
+    {
+        CreateGrid();
+       
     }
     void CreateGrid()
     {
@@ -31,21 +37,67 @@ public class Grid : MonoBehaviour
                 for (int z = 0; z < GridSizeZ; z++)
                 {
                     Vector3 worldpoint = worldBottomLeft + Vector3.right * (x * NodeSize + NodeRadius) + Vector3.up * (y * NodeSize + NodeRadius) + Vector3.forward * (z * NodeSize + NodeRadius);
-                    bool walkable = !(Physics.CheckSphere(worldpoint, NodeRadius));
-                    grid[x, y, z] = new Node(walkable, worldpoint);
+                 bool walkable = !Physics.BoxCast(worldpoint, Vector3.one * NodeRadius, Vector3.up, Quaternion.identity, WalkableMask);
+
+                    grid[x, y, z] = new Node(walkable, worldpoint, x, y, z);
                 }
             }
         }
     }
-
+    public Node NodeFromWorldPoint(Vector3 WorldPosition)
+    {
+        float PercentX = Mathf.Clamp01((WorldPosition.x + GridWorldSize.x / 2) / GridWorldSize.x);
+        float PercentY = Mathf.Clamp01((WorldPosition.y + GridWorldSize.y / 2) / GridWorldSize.y);
+        float PercentZ = Mathf.Clamp01((WorldPosition.z) / GridWorldSize.z);
+        int x = Mathf.RoundToInt((GridSizeX - 1) * PercentX);
+        int y = Mathf.RoundToInt((GridSizeY - 1) * PercentY);
+        int z = Mathf.RoundToInt((GridSizeZ - 1) * PercentZ);
+        return grid[x, y, z];
+    }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(GridWorldSize.x, GridWorldSize.y, GridWorldSize.z));
-    foreach (Node n in grid) 
+        foreach (Node n in grid)
         {
-            Gizmos.color = (n.Walkable) ? Color.white : Color.red;
-            Gizmos.DrawCube(n.WorldPosition, Vector3.one * (NodeSize - .1f));
+            Gizmos.color = (n.Walkable)? Color.clear : Color.red;
+            if (path != null)
+            {
+                if (path.Contains(n))
+                {
+                    Gizmos.color = Color.cyan;
+                }
+              
+            }
+            if (n != null)
+            {
+                Gizmos.DrawCube(n.WorldPosition, Vector3.one * (NodeSize - 0.1f));
+            }
         }
+    }
+    public List<Node> GetNeighbours(Node node)
+    {
+        List<Node> Neighbours = new List<Node>();
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int z = -1; z <= 1; z++)
+                {
+                    if (x == 0 && y == 0 && z == 0)
+                        continue;
+
+                    int checkX = node.GridX + x;
+                    int checkY = node.GridY + y;
+                    int checkZ = node.GridZ + z;
+
+                    if (checkX >= 0 && checkX < GridSizeX && checkY >= 0 && checkY < GridSizeY && checkZ >= 0 && checkZ < GridSizeZ)
+                    {
+                        Neighbours.Add(grid[checkX, checkY, checkZ]);
+                    }
+                }
+            }
+        }
+        return Neighbours;
     }
 }
