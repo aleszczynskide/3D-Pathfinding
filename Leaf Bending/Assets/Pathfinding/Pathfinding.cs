@@ -85,6 +85,6 @@ public class Pathfinding : MonoBehaviour
         int dstx = Mathf.Abs(nodea.GridX - nodeb.GridX);
         int dsty = Mathf.Abs(nodea.GridY - nodeb.GridY);
         int dstz = Mathf.Abs(nodea.GridZ - nodeb.GridZ);
-        return 14 * (dstx + dsty) + 20 * dstz;
+        return 14 * (dstx + dsty) + 5 + dstz;
     }
 }

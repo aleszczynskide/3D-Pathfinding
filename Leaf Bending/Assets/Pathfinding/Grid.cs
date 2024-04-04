@@ -15,7 +15,7 @@ public class Grid : MonoBehaviour
     public List<Node> path;
     private void Start()
     {
-        NodeSize = NodeRadius * 2;
+        NodeSize = NodeRadius * 4;
         GridSizeX = Mathf.RoundToInt(GridWorldSize.x / NodeSize);
         GridSizeY = Mathf.RoundToInt(GridWorldSize.y / NodeSize);
         GridSizeZ = Mathf.RoundToInt(GridWorldSize.z / NodeSize);
@@ -46,9 +46,9 @@ public class Grid : MonoBehaviour
     }
     public Node NodeFromWorldPoint(Vector3 WorldPosition)
     {
-        float PercentX = Mathf.Clamp01((WorldPosition.x + GridWorldSize.x / 2) / GridWorldSize.x);
-        float PercentY = Mathf.Clamp01((WorldPosition.y + GridWorldSize.y / 2) / GridWorldSize.y);
-        float PercentZ = Mathf.Clamp01((WorldPosition.z) / GridWorldSize.z);
+        float PercentX = Mathf.Clamp01((WorldPosition.x - 2) / GridWorldSize.x);
+        float PercentY = Mathf.Clamp01((WorldPosition.y ) / GridWorldSize.y);
+        float PercentZ = Mathf.Clamp01((WorldPosition.z  - 3) / GridWorldSize.z);
         int x = Mathf.RoundToInt((GridSizeX - 1) * PercentX);
         int y = Mathf.RoundToInt((GridSizeY - 1) * PercentY);
         int z = Mathf.RoundToInt((GridSizeZ - 1) * PercentZ);
