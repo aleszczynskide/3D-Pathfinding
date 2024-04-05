@@ -71,15 +71,15 @@ public class Grid : MonoBehaviour
         int x = Mathf.RoundToInt((GridSizeX - 1) * PercentX);
         int y = Mathf.RoundToInt((GridSizeY - 1) * PercentY);
         int z = Mathf.RoundToInt((GridSizeZ - 1) * PercentZ);
-        return pathgrid[x, y, z];
+        return grid[x, y, z];
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(GridWorldSize.x, GridWorldSize.y, GridWorldSize.z));
-        foreach (Node n in pathgrid)
+        foreach (Node n in grid)
         {
-            //Gizmos.color = (n.Walkable)? Color.clear : Color.clear;
+            Gizmos.color = (n.Walkable)? Color.clear : Color.clear;
             if (path != null)
             {
                 if (path.Contains(n))
@@ -112,7 +112,7 @@ public class Grid : MonoBehaviour
 
                     if (checkX >= 0 && checkX < GridSizeX && checkY >= 0 && checkY < GridSizeY && checkZ >= 0 && checkZ < GridSizeZ)
                     {
-                        Neighbours.Add(pathgrid[checkX, checkY, checkZ]);
+                        Neighbours.Add(grid[checkX, checkY, checkZ]);
                     }
                 }
             }

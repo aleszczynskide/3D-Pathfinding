@@ -22,7 +22,11 @@ public class SeekerMovement : MonoBehaviour
         if (pathfinding != null)
         {
             pathfinding.FindPath(seeker.position, target.position);
-            FollowPath();
+            if (seeker.transform.position != target.position) 
+            {
+                FollowPath();
+            }
+           
         }
     }
 
@@ -33,20 +37,17 @@ public class SeekerMovement : MonoBehaviour
             if (pathIndex < pathfinding.grid.path.Count)
             {
                 Node targetNode = pathfinding.grid.path[pathIndex];
-                seeker.GetComponent<Pathfinding>().Target.transform.position = targetNode.WorldPosition;
-                Vector2 targetPosition = targetNode.WorldPosition;
-
-                Vector2 moveDir = (targetPosition - (Vector2)seeker.position).normalized;
-                Vector2 moveAmount = moveDir * Time.deltaTime * moveSpeed; 
-
-                seeker.position += (Vector3)moveAmount;
-
-                float distanceToTarget = Vector2.Distance(seeker.position, targetPosition);
-                if (distanceToTarget < pathfinding.grid.NodeRadius)
+                Vector3 targetPosition = targetNode.WorldPosition;
+                Vector3 moveDir = (targetPosition - seeker.position).normalized;
+                Vector3 moveAmount = moveDir * Time.deltaTime * moveSpeed;
+                seeker.position = Vector3.Lerp(seeker.position, targetPosition, Time.deltaTime * moveSpeed);
+                if (Vector3.Distance(seeker.position, targetPosition) < 0.1f)
                 {
                     pathIndex++;
                 }
             }
         }
     }
+
+
 }
