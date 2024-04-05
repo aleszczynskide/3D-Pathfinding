@@ -12,6 +12,9 @@ public class Grid : MonoBehaviour
     int GridSizeX;
     int GridSizeY;
     int GridSizeZ;
+    public float A; 
+    public float B;
+    public float C;
     public List<Node> path;
     private void Start()
     {
@@ -46,9 +49,9 @@ public class Grid : MonoBehaviour
     }
     public Node NodeFromWorldPoint(Vector3 WorldPosition)
     {
-        float PercentX = Mathf.Clamp01((WorldPosition.x - 2) / GridWorldSize.x);
-        float PercentY = Mathf.Clamp01((WorldPosition.y ) / GridWorldSize.y);
-        float PercentZ = Mathf.Clamp01((WorldPosition.z  - 3) / GridWorldSize.z);
+        float PercentX = Mathf.Clamp01((WorldPosition.x - A) / GridWorldSize.x);
+        float PercentY = Mathf.Clamp01((WorldPosition.y - B) / GridWorldSize.y);
+        float PercentZ = Mathf.Clamp01((WorldPosition.z  - C) / GridWorldSize.z);
         int x = Mathf.RoundToInt((GridSizeX - 1) * PercentX);
         int y = Mathf.RoundToInt((GridSizeY - 1) * PercentY);
         int z = Mathf.RoundToInt((GridSizeZ - 1) * PercentZ);
@@ -60,7 +63,7 @@ public class Grid : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, new Vector3(GridWorldSize.x, GridWorldSize.y, GridWorldSize.z));
         foreach (Node n in grid)
         {
-            Gizmos.color = (n.Walkable)? Color.clear : Color.red;
+            Gizmos.color = (n.Walkable)? Color.clear : Color.clear;
             if (path != null)
             {
                 if (path.Contains(n))
