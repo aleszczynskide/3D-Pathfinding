@@ -441,7 +441,7 @@ Transform:
   m_GameObject: {fileID: 824276431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.6, y: 6.56, z: 11.765655}
+  m_LocalPosition: {x: 15.6, y: 5.01, z: 11.765655}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -465,7 +465,7 @@ MonoBehaviour:
   GridWorldSize: {x: 25, y: 7.5, z: 15}
   NodeRadius: 0.2
   A: 3.12
-  B: 2
+  B: 0
   C: 3.87
 --- !u!114 &824276434
 MonoBehaviour:

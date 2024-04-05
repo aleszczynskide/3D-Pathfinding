@@ -8,6 +8,7 @@ public class Grid : MonoBehaviour
     public Vector3 GridWorldSize;
     public float NodeRadius;
     Node[,,] grid;
+    Node[,,] pathgrid;
     float NodeSize;
     int GridSizeX;
     int GridSizeY;
@@ -32,6 +33,7 @@ public class Grid : MonoBehaviour
     void CreateGrid()
     {
         grid = new Node[GridSizeX, GridSizeY, GridSizeZ];
+        pathgrid = new Node[GridSizeX, GridSizeY, GridSizeZ];
         Vector3 worldBottomLeft = transform.position - Vector3.right * GridWorldSize.x / 2 - Vector3.up * GridWorldSize.y / 2 - Vector3.forward * GridWorldSize.z / 2;
         for (int x = 0; x < GridSizeX; x++)
         {
@@ -46,6 +48,20 @@ public class Grid : MonoBehaviour
                 }
             }
         }
+        for (int x = 0; x < GridSizeX; x++)
+        {
+            for (int y = 0; y < GridSizeY; y++)
+            {
+                for (int z = 0; z < GridSizeZ; z++)
+                {
+                    if (y + 1 < GridSizeY && grid[x, y + 1, z].Walkable && !grid[x, y, z].Walkable)
+                    {
+                        Vector3 worldpoint = worldBottomLeft + Vector3.right * (x * NodeSize + NodeRadius) + Vector3.up * (y * NodeSize + NodeRadius) + Vector3.forward * (z * NodeSize + NodeRadius);
+                        pathgrid[x, y, z] = new Node(false, worldpoint, x, y, z);
+                    }
+                }
+            }
+        }
     }
     public Node NodeFromWorldPoint(Vector3 WorldPosition)
     {
@@ -55,15 +71,15 @@ public class Grid : MonoBehaviour
         int x = Mathf.RoundToInt((GridSizeX - 1) * PercentX);
         int y = Mathf.RoundToInt((GridSizeY - 1) * PercentY);
         int z = Mathf.RoundToInt((GridSizeZ - 1) * PercentZ);
-        return grid[x, y, z];
+        return pathgrid[x, y, z];
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(GridWorldSize.x, GridWorldSize.y, GridWorldSize.z));
-        foreach (Node n in grid)
+        foreach (Node n in pathgrid)
         {
-            Gizmos.color = (n.Walkable)? Color.clear : Color.clear;
+            //Gizmos.color = (n.Walkable)? Color.clear : Color.clear;
             if (path != null)
             {
                 if (path.Contains(n))
@@ -96,7 +112,7 @@ public class Grid : MonoBehaviour
 
                     if (checkX >= 0 && checkX < GridSizeX && checkY >= 0 && checkY < GridSizeY && checkZ >= 0 && checkZ < GridSizeZ)
                     {
-                        Neighbours.Add(grid[checkX, checkY, checkZ]);
+                        Neighbours.Add(pathgrid[checkX, checkY, checkZ]);
                     }
                 }
             }
