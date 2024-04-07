@@ -57,7 +57,7 @@ public class Grid : MonoBehaviour
                     if (y + 1 < GridSizeY && grid[x, y + 1, z].Walkable && !grid[x, y, z].Walkable)
                     {
                         Vector3 worldpoint = worldBottomLeft + Vector3.right * (x * NodeSize + NodeRadius) + Vector3.up * (y * NodeSize + NodeRadius) + Vector3.forward * (z * NodeSize + NodeRadius);
-                        pathgrid[x, y, z] = new Node(false, worldpoint, x, y, z);
+                        pathgrid[x, y, z] = new Node(true, worldpoint, x, y, z);
                     }
                 }
             }
@@ -86,7 +86,6 @@ public class Grid : MonoBehaviour
                 {
                     Gizmos.color = Color.cyan;
                 }
-              
             }
             if (n != null)
             {

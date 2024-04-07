@@ -5,6 +5,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using System.Diagnostics;
 
 public class Pathfinding : MonoBehaviour
 {
@@ -16,14 +17,16 @@ public class Pathfinding : MonoBehaviour
         {
             grid = GetComponent<Grid>();
         }
-       
+
     }
     private void Update()
     {
-       //FindPath(Seeker.transform.position,Target.transform.position);
+        //FindPath(Seeker.transform.position, Target.transform.position);
     }
     public void FindPath(Vector3 StartPosition, Vector3 TargetPosition)
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         Node StartNode = grid.NodeFromWorldPoint(StartPosition);
         Node TargetNode = grid.NodeFromWorldPoint(TargetPosition);
         List<Node> OpenSet = new List<Node>();
@@ -45,6 +48,8 @@ public class Pathfinding : MonoBehaviour
 
             if (CurrentNode == TargetNode)
             {
+                sw.Stop();
+                print("PathFound" + sw.ElapsedMilliseconds + "ms");
                 RetracePath(StartNode, TargetNode);
                 return;
             }
