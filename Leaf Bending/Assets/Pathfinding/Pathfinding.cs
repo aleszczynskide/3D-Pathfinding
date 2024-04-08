@@ -5,7 +5,6 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using System.Diagnostics;
 
 public class Pathfinding : MonoBehaviour
 {
@@ -21,12 +20,10 @@ public class Pathfinding : MonoBehaviour
     }
     private void Update()
     {
-        //FindPath(Seeker.transform.position, Target.transform.position);
+        FindPath(Seeker.transform.position, Target.transform.position);
     }
     public void FindPath(Vector3 StartPosition, Vector3 TargetPosition)
     {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
         Node StartNode = grid.NodeFromWorldPoint(StartPosition);
         Node TargetNode = grid.NodeFromWorldPoint(TargetPosition);
         List<Node> OpenSet = new List<Node>();
@@ -48,15 +45,13 @@ public class Pathfinding : MonoBehaviour
 
             if (CurrentNode == TargetNode)
             {
-                sw.Stop();
-                print("PathFound" + sw.ElapsedMilliseconds + "ms");
                 RetracePath(StartNode, TargetNode);
                 return;
             }
 
             foreach (Node Neighbour in grid.GetNeighbours(CurrentNode))
             {
-                if (!Neighbour.Walkable || ClosedSet.Contains(Neighbour))
+                if (Neighbour.Walkable || ClosedSet.Contains(Neighbour))
                 {
                     continue;
                 }
@@ -94,6 +89,12 @@ public class Pathfinding : MonoBehaviour
         int dstx = Mathf.Abs(nodea.GridX - nodeb.GridX);
         int dsty = Mathf.Abs(nodea.GridY - nodeb.GridY);
         int dstz = Mathf.Abs(nodea.GridZ - nodeb.GridZ);
-        return 14 * (dstx + dsty) + 5 + dstz;
+        int upwardCost = 10;
+        int totalCost = 14 * (dstx + dsty) + (2 * dstz);
+        if (nodea.GridY < nodeb.GridY)
+        {
+            totalCost += upwardCost;
+        }
+        return totalCost;
     }
 }

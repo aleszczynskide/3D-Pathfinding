@@ -42,7 +42,7 @@ public class Grid : MonoBehaviour
                 for (int z = 0; z < GridSizeZ; z++)
                 {
                  Vector3 worldpoint = worldBottomLeft + Vector3.right * (x * NodeSize + NodeRadius) + Vector3.up * (y * NodeSize + NodeRadius) + Vector3.forward * (z * NodeSize + NodeRadius);
-                 bool walkable = !Physics.BoxCast(worldpoint, Vector3.one * NodeRadius, Vector3.up, Quaternion.identity, WalkableMask);
+                 bool walkable = !Physics.BoxCast(worldpoint, Vector3.one * NodeRadius, Vector3.down, Quaternion.identity, WalkableMask);
 
                     grid[x, y, z] = new Node(walkable, worldpoint, x, y, z);
                 }
@@ -79,7 +79,7 @@ public class Grid : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, new Vector3(GridWorldSize.x, GridWorldSize.y, GridWorldSize.z));
         foreach (Node n in grid)
         {
-            Gizmos.color = (n.Walkable)? Color.clear : Color.clear;
+            Gizmos.color = (n.Walkable)? Color.clear: Color.clear;
             if (path != null)
             {
                 if (path.Contains(n))
