@@ -5,6 +5,7 @@ using UnityEngine;
 public class Node : IHeapPoint<Node>
 {
     public bool Walkable;
+    public bool Obstacle;
     public Vector3 WorldPosition;
     public int GCost;
     public int HCost;
@@ -13,9 +14,10 @@ public class Node : IHeapPoint<Node>
     public int GridZ;
     public Node Parent;
     int heapIndex;
-    public Node(bool _walkable, Vector3 _worldPos,int _gridx,int _gridy,int _gridz)
+    public Node(bool _walkable,bool _obstacle, Vector3 _worldPos,int _gridx,int _gridy,int _gridz)
     {
         Walkable = _walkable;
+        Obstacle = _obstacle;
         WorldPosition = _worldPos;
         GridX = _gridx;
         GridY = _gridy;

@@ -51,7 +51,7 @@ public class Pathfinding : MonoBehaviour
 
             foreach (Node Neighbour in grid.GetNeighbours(CurrentNode))
             {
-                if (Neighbour.Walkable || ClosedSet.Contains(Neighbour))
+                if (Neighbour.Walkable || Neighbour.Obstacle || ClosedSet.Contains(Neighbour))
                 {
                     continue;
                 }
