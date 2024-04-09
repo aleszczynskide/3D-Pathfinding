@@ -433,11 +433,11 @@ Transform:
   m_GameObject: {fileID: 824276431}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.6, y: 5.01, z: 11.765655}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0.09000015, y: -0.1500001, z: -0.7600002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2082586494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &824276433
 MonoBehaviour:
@@ -457,7 +457,7 @@ MonoBehaviour:
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 192
-  GridWorldSize: {x: 25, y: 7.5, z: 15}
+  GridWorldSize: {x: 25, y: 10, z: 15}
   NodeRadius: 0.2
   A: 3.12
   B: 0
@@ -1519,6 +1519,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1885076073}
+  - {fileID: 824276432}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2082586495
@@ -1659,7 +1660,6 @@ SceneRoots:
   - {fileID: 457467832}
   - {fileID: 2082586494}
   - {fileID: 2958835198284260225}
-  - {fileID: 824276432}
   - {fileID: 953693169}
   - {fileID: 1098615185}
   - {fileID: 1523218022}

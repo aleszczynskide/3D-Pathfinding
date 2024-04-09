@@ -21,7 +21,6 @@ public class SeekerMovement : MonoBehaviour
     {
         if (pathfinding != null)
         {
-            pathfinding.FindPath(seeker.position, target.position);
             if (seeker.transform.position != target.position) 
             {
                 FollowPath();
