@@ -90,7 +90,7 @@ public class Pathfinding : MonoBehaviour
         int dsty = Mathf.Abs(nodea.GridY - nodeb.GridY);
         int dstz = Mathf.Abs(nodea.GridZ - nodeb.GridZ);
         int upwardCost = 10;
-        int totalCost = 14 * (dstx + dsty) + (2 * dstz);
+        int totalCost = 14 * (dstx + dstz) + (dsty/10);
         if (nodea.GridY < nodeb.GridY)
         {
             totalCost += upwardCost;

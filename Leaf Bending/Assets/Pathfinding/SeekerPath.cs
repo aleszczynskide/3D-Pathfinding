@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 public class SeekerMovement : MonoBehaviour
@@ -37,7 +38,7 @@ public class SeekerMovement : MonoBehaviour
             {
                 Node targetNode = pathfinding.grid.path[pathIndex];
                 Vector3 targetPosition = targetNode.WorldPosition;
-                Vector3 moveDir = (targetPosition - seeker.position).normalized;
+                Vector3 moveDir = (new Vector3 (targetPosition.x, targetPosition.y - 2f, targetPosition.z ) - seeker.position).normalized;
                 Vector3 moveAmount = moveDir * Time.deltaTime * moveSpeed;
                 seeker.position = Vector3.Lerp(seeker.position, targetPosition, Time.deltaTime * moveSpeed);
                 if (Vector3.Distance(seeker.position, targetPosition) < 0.1f)
